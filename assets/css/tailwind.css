@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css');
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #1a2c79;
+  --color-secondary: #e80566;
+  --font-archivo: 'Archivo', sans-serif;
+}
+
+@layer {
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+}

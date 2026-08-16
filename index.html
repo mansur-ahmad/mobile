@@ -1,513 +1,1116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>MobileMela - NextGen Mobile Shop</title>
-   <style>
-      /* CSS Reset & Variables */
-      * {
-         margin: 0;
-         padding: 0;
-         box-sizing: border-box;
-         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-         scroll-behavior: smooth;
-      }
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Corpor X</title>
 
-      :root {
-         --primary-bg: #0b0c10;
-         --card-bg: #1f2833;
-         --accent-glow: #66fcf1;
-         --accent-pink: #ff007f;
-         --text-color: #c5c6c7;
-      }
+   <!-- Font Icon -->
+   <link rel="stylesheet" href="assets/css/all.min.css" />
 
-      body {
-         background-color: var(--primary-bg);
-         color: var(--text-color);
-         line-height: 1.6;
-         overflow-x: hidden;
-      }
+   <!-- Main CSS -->
+   <link rel="stylesheet" href="assets/css/style.css" />
 
-      /* Animations */
-      @keyframes borderGlow {
-
-         0%,
-         100% {
-            border-color: #00d2ff;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
-         }
-
-         33% {
-            border-color: #ff007f;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-         }
-
-         66% {
-            border-color: #7928ca;
-            box-shadow: 0 0 15px rgba(121, 40, 202, 0.4);
-         }
-      }
-
-      @keyframes textColorChange {
-
-         0%,
-         100% {
-            color: #00d2ff;
-         }
-
-         50% {
-            color: #ff007f;
-         }
-      }
-
-      @keyframes float {
-
-         0%,
-         100% {
-            transform: translateY(0px);
-         }
-
-         50% {
-            transform: translateY(-10px);
-         }
-      }
-
-      @keyframes pulse {
-
-         0%,
-         100% {
-            transform: scale(1);
-         }
-
-         50% {
-            transform: scale(1.05);
-         }
-      }
-
-      /* Header Navigation */
-      header {
-         background: rgba(11, 12, 16, 0.95);
-         backdrop-filter: blur(10px);
-         padding: 1.2rem 5%;
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-         position: sticky;
-         top: 0;
-         z-index: 1000;
-         border-bottom: 2px solid transparent;
-         animation: borderGlow 6s infinite linear;
-      }
-
-      .logo {
-         font-size: 1.8rem;
-         font-weight: 800;
-         animation: textColorChange 4s infinite alternate;
-         letter-spacing: 1px;
-      }
-
-      header nav a {
-         color: #fff;
-         text-decoration: none;
-         margin-left: 25px;
-         font-weight: 600;
-         position: relative;
-         padding: 5px 0;
-         transition: color 0.3s;
-      }
-
-      header nav a::after {
-         content: '';
-         position: absolute;
-         width: 0;
-         height: 2px;
-         bottom: 0;
-         left: 0;
-         background-color: var(--accent-glow);
-         transition: width 0.3s ease-in-out;
-      }
-
-      header nav a:hover::after {
-         width: 100%;
-      }
-
-      /* Hamburger Menu Icon (Hidden on Desktop) */
-      .menu-toggle {
-         display: none;
-         font-size: 1.8rem;
-         color: #fff;
-         cursor: pointer;
-         background: none;
-         border: none;
-      }
-
-      /* Mobile Navigation Overlay */
-      @media screen and (max-width: 768px) {
-         .menu-toggle {
-            display: block;
-            /* Show hamburger button on mobile */
-         }
-
-         header nav {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(11, 12, 16, 0.98);
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            display: none;
-            /* Hidden by default */
-            border-bottom: 2px solid var(--accent-glow);
-         }
-
-         header nav.active {
-            display: flex;
-            /* Shown when clicked */
-         }
-
-         header nav a {
-            margin: 12px 0;
-            font-size: 1.1rem;
-         }
-      }
-
-      /* Section Layouts */
-      section {
-         padding: 6rem 5%;
-         text-align: center;
-      }
-
-      .section-title {
-         font-size: 2.8rem;
-         margin-bottom: 3rem;
-         display: inline-block;
-         position: relative;
-         animation: textColorChange 5s infinite alternate;
-      }
-
-      /* Section 1: Hero */
-      #hero {
-         min-height: 85vh;
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center;
-         background: radial-gradient(circle, rgba(31, 40, 51, 0.8) 0%, rgba(11, 12, 16, 1) 100%);
-         position: relative;
-      }
-
-      #hero h1 {
-         font-size: 4rem;
-         margin-bottom: 1.5rem;
-         background: linear-gradient(45deg, #00d2ff, #ff007f);
-         -webkit-background-clip: text;
-         -webkit-text-fill-color: transparent;
-         animation: pulse 3s infinite ease-in-out;
-      }
-
-      #hero p {
-         font-size: 1.2rem;
-         max-width: 650px;
-         margin-bottom: 2.5rem;
-         color: #a0a5a8;
-      }
-
-      .btn-animated {
-         padding: 14px 35px;
-         font-size: 1.1rem;
-         font-weight: bold;
-         color: #fff;
-         text-decoration: none;
-         border: 2px solid #00d2ff;
-         border-radius: 30px;
-         background: transparent;
-         transition: all 0.4s ease;
-         animation: borderGlow 4s infinite linear;
-         display: inline-block;
-      }
-
-      .btn-animated:hover {
-         transform: translateY(-3px) scale(1.05);
-         background: #00d2ff;
-         color: #000;
-         box-shadow: 0 0 25px #00d2ff;
-      }
-
-      /* Section 2: Products Grid */
-      .grid-container {
-         display: grid;
-         grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-         gap: 35px;
-      }
-
-      .product-card {
-         background: var(--card-bg);
-         padding: 25px;
-         border-radius: 16px;
-         border: 2px solid transparent;
-         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-         position: relative;
-      }
-
-      .product-card:hover {
-         transform: translateY(-12px);
-         animation: borderGlow 3s infinite linear;
-      }
-
-      .product-card img {
-         width: 100%;
-         height: 250px;
-         object-fit: cover;
-         border-radius: 12px;
-         margin-bottom: 15px;
-         animation: float 4s infinite ease-in-out;
-      }
-
-      .product-card h3 {
-         color: #fff;
-         margin-bottom: 8px;
-      }
-
-      .price {
-         font-size: 1.4rem;
-         font-weight: bold;
-         color: var(--accent-glow);
-         margin: 12px 0;
-      }
-
-      .btn-buy {
-         display: inline-block;
-         width: 100%;
-         padding: 10px 0;
-         background: linear-gradient(45deg, #00d2ff, #7928ca);
-         color: white;
-         text-decoration: none;
-         border-radius: 8px;
-         font-weight: bold;
-         transition: opacity 0.3s, transform 0.2s;
-      }
-
-      .btn-buy:hover {
-         opacity: 0.9;
-         transform: scale(1.02);
-      }
-
-      /* Section 3: Features */
-      .feature-box {
-         background: var(--card-bg);
-         padding: 40px 25px;
-         border-radius: 15px;
-         border: 1px solid rgba(255, 255, 255, 0.05);
-         transition: all 0.3s ease;
-      }
-
-      .feature-box:hover {
-         border: 1px solid var(--accent-glow);
-         box-shadow: 0 0 20px rgba(102, 252, 241, 0.2);
-         transform: translateY(-8px);
-      }
-
-      .feature-icon {
-         font-size: 2.5rem;
-         margin-bottom: 15px;
-         display: inline-block;
-         animation: float 3s infinite ease-in-out;
-      }
-
-      /* Section 4: Reviews */
-      .review-card {
-         background: var(--card-bg);
-         padding: 30px;
-         border-radius: 15px;
-         border-left: 4px solid #ff007f;
-         text-align: left;
-         transition: all 0.3s ease;
-      }
-
-      .review-card:hover {
-         border-left-color: #00d2ff;
-         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-         transform: scale(1.03);
-      }
-
-      .reviewer {
-         display: block;
-         margin-top: 15px;
-         font-weight: bold;
-         color: var(--accent-glow);
-      }
-
-      /* Section 5: Contact */
-      #contact {
-         background: linear-gradient(180deg, var(--primary-bg) 0%, #16213e 100%);
-      }
-
-      .animated-input-group {
-         display: flex;
-         justify-content: center;
-         gap: 10px;
-         max-width: 500px;
-         margin: 0 auto;
-      }
-
-      .animated-input-group input {
-         padding: 14px 20px;
-         border-radius: 25px;
-         border: 2px solid #333;
-         background: #0f172a;
-         color: #fff;
-         outline: none;
-         flex: 1;
-         transition: all 0.3s ease;
-      }
-
-      .animated-input-group input:focus {
-         border-color: #00d2ff;
-         box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
-      }
-
-      /* Footer */
-      footer {
-         padding: 2.5rem;
-         background: #050508;
-         text-align: center;
-         border-top: 1px solid transparent;
-         animation: borderGlow 6s infinite linear;
-      }
-   </style>
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png" />
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
 
-   <!-- Header -->
-   <header>
-      <div class="logo">MobileMela</div>
 
-      <!-- Hamburger Icon for Mobile -->
-      <button class="menu-toggle" id="menuToggle">☰</button>
 
-      <nav id="navMenu">
-         <a href="#hero">Home</a>
-         <a href="#products">Smartphones</a>
-         <a href="#features">Features</a>
-         <a href="#reviews">Reviews</a>
-         <a href="#contact">Contact</a>
-      </nav>
+
+   <!------------- header start ------------->
+   <header class="absolute top-0 left-0 w-screen py-2 z-20">
+      <div class="container flex items-center justify-between">
+         <a href="#">
+            <img src="assets/image/logo.png" alt="Corporx Logo">
+         </a>
+         <nav class="hidden lg:block">
+            <ul class="flex gap-x-5">
+               <li class="group relative py-4">
+                  <a class=" px-3 flex items-center gap-x-2 text-white hover:text-gray-300" href="#">
+
+
+                     <span>Home</span>
+                     <i class="text-[13px] group-hover:rotate-180 duration-500 fa-solid fa-chevron-down"></i>
+                  </a>
+                  <ul
+                     class="absolute group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 invisible opacity-0 top-full left-0 bg-white w-[180px] text-black shadow-2xl rounded-[5px] opacity-0 translate-y-2 transition-all duration-300">
+
+                     <li><a class="block py-2 px-5 duration-300 hover:bg-primary/10 text-black/60 hover:text-black/75"
+                           href="#">Home
+                           page 01</a>
+                     </li>
+                     <li><a class="block py-2 px-5 duration-300 hover:bg-primary/10 text-black/60 hover:text-black/75"
+                           href="#">Home
+                           page 02</a>
+                     </li>
+                     <li><a class="block py-2 px-5 duration-300 hover:bg-primary/10 text-black/60 hover:text-black/75"
+                           href="#">Home
+                           page 03</a>
+                     </li>
+                     <li><a class="block py-2 px-5 duration-300 hover:bg-primary/10 text-black/60 hover:text-black/75"
+                           href="#">Home
+                           page 04</a>
+                     </li>
+                     <li><a class="block py-2 px-5 duration-300 hover:bg-primary/10 text-black/60 hover:text-black/75"
+                           href="#">Home
+                           page 05</a>
+                     </li>
+                  </ul>
+               </li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">About us</a></li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">Pages</a></li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">Services</a></li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">Projects</a></li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">Blog</a></li>
+               <li class="py-4"><a class=" px-3 text-white hover:text-gray-300" href="#">Contact us</a></li>
+            </ul>
+         </nav>
+
+         <!-- mobile menu button -->
+         <div class="lg:hidden">
+            <button
+               class="mobile-menu-button flex w-[55px] h-[55px] items-center justify-center cursor-pointer text-white text-2xl">
+               <i class="fa-solid fa-bars"></i>
+            </button>
+         </div>
+
+      </div>
    </header>
+   <!------------- header end ------------->
 
-   <!-- Section 1: Hero -->
-   <section id="hero">
-      <h1>Next-Gen Smartphones</h1>
-      <p>Experience ultra-fast performance, mesmerizing displays, and pro-grade cameras. Step into the future today.</p>
-      <a href="#products" class="btn-animated">Explore Collection</a>
-   </section>
 
-   <!-- Section 2: Products -->
-   <section id="products">
-      <h2 class="section-title">Featured Flagships</h2>
-      <div class="grid-container">
-         <div class="product-card">
-            <img src="image-1.jpg" alt="Mobile 1">
-            <h3>Galaxy X Pro</h3>
-            <p>128GB Storage, 8GB RAM, 108MP Camera</p>
-            <div class="price">$899</div>
-            <a href="#" class="btn-buy">Buy Now</a>
+   <!-- main start -->
+
+   <main class="flex-1">
+      <!-- Banner start -->
+      <section class="bg-linear-to-r relative from-primary from-30% to-[#1A2C79]/18 to-100% ">
+         <div class="bg-[url(../image/hero-bg.jpg)] bg-cover absolute top-0 left-0 w-full h-full -z-10"></div>
+         <div class="container">
+            <div class=" md:w-2/3 lg:w-1/2 lg:py-[190px] md:py-[100px] py-[70px]">
+               <span class="text-white uppercase ">Business Solutions</span>
+               <h1
+                  class="font-bold lg:text-[56px] md:text-[45px] text-[35px] text-white lg:leading-[70px] md:leading-[55px] leading-[45px]">
+                  Your Most
+                  Trusted Business
+                  Partner</h1>
+               <p class="lg:text-[20px] md:text-[16px] text-[13px] text-white py-[30px]">Holisticly procrastinate
+                  mission-critical convergence
+                  with
+                  reliable customer service. Assertively
+                  underwhelm idea-sharing for impactful solutions.</p>
+               <a class="inline-block px-[30px] py-[15px] bg-secondary rounded-sm text-white duration-300 hover:bg-[#c30456] capitalize"
+                  href="#">Get start now</a>
+            </div>
          </div>
-         <div class="product-card">
-            <img src="image-2.jpg" alt="Mobile 2">
-            <h3>iTech Pro 15</h3>
-            <p>256GB Storage, A16 Chip, Pro Motion</p>
-            <div class="price">$1099</div>
-            <a href="#" class="btn-buy">Buy Now</a>
+      </section>
+      <!-- Banner end -->
+
+      <!-- category start -->
+      <section class="lg:-mt-[100px] mt-[50px]">
+         <div class="container">
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
+               <div class="p-[50px] z-1 group relative bg-white rounded-[15px] shadow-2xl overflow-hidden">
+                  <span class="text-[50px] text-primary group-hover:text-white">
+                     <i class="fa-brands fa-confluence"></i>
+                  </span>
+                  <h4 class="text-[20px] font-semibold pb-3 group-hover:text-white">Creative Design</h4>
+                  <p class="text-[#707070] group-hover:text-white/80">Compellingly promote collaborative products
+                     without synergistic
+                     schemas.</p>
+
+                  <div
+                     class="absolute rounded-[15px] group-hover:duration-500 group-hover:top-0 top-full opacity-0 group-hover:opacity-100 left-0 w-full h-full bg-[url(../image/imgi_16_1.jpg)] bg-cover -z-1">
+                  </div>
+                  <div
+                     class="absolute rounded-[15px] duration-300 group-hover:top-0 w-full h-full top-full -z-1 left-0 bg-linear-[75deg] from-[#1A2C79]/65 to-[#E80566]/55">
+                  </div>
+
+               </div>
+               <div class="p-[50px] z-1 group relative bg-white rounded-[15px] shadow-2xl overflow-hidden">
+                  <span class="text-[50px] text-primary group-hover:text-white">
+                     <i class="fa-brands fa-confluence"></i>
+                  </span>
+                  <h4 class="text-[20px] font-semibold pb-3 group-hover:text-white">Creative Design</h4>
+                  <p class="text-[#707070] group-hover:text-white/80">Compellingly promote collaborative products
+                     without synergistic
+                     schemas.</p>
+
+                  <div
+                     class="absolute rounded-[15px] group-hover:duration-500 group-hover:top-0 top-full opacity-0 group-hover:opacity-100 left-0 w-full h-full bg-[url(../image/imgi_16_1.jpg)] bg-cover -z-1">
+                  </div>
+                  <div
+                     class="absolute rounded-[15px] duration-300 group-hover:top-0 w-full h-full top-full -z-1 left-0 bg-linear-[75deg] from-[#1A2C79]/65 to-[#E80566]/55">
+                  </div>
+
+               </div>
+               <div class="p-[50px] z-1 group relative bg-white rounded-[15px] shadow-2xl overflow-hidden">
+                  <span class="text-[50px] text-primary group-hover:text-white">
+                     <i class="fa-brands fa-confluence"></i>
+                  </span>
+                  <h4 class="text-[20px] font-semibold pb-3 group-hover:text-white">Creative Design</h4>
+                  <p class="text-[#707070] group-hover:text-white/80">Compellingly promote collaborative products
+                     without synergistic
+                     schemas.</p>
+
+                  <div
+                     class="absolute rounded-[15px] group-hover:duration-500 group-hover:top-0 top-full opacity-0 group-hover:opacity-100 left-0 w-full h-full bg-[url(../image/imgi_16_1.jpg)] bg-cover -z-1">
+                  </div>
+                  <div
+                     class="absolute rounded-[15px] duration-300 group-hover:top-0 w-full h-full top-full -z-1 left-0 bg-linear-[75deg] from-[#1A2C79]/65 to-[#E80566]/55">
+                  </div>
+
+               </div>
+            </div>
          </div>
-         <div class="product-card">
-            <img src="image-3.jpg" alt="Mobile 3">
-            <h3>Pixel Ultra</h3>
-            <p>Advanced AI Camera, Pure Android OS</p>
-            <div class="price">$799</div>
-            <a href="#" class="btn-buy">Buy Now</a>
+         </div>
+      </section>
+      <!-- category end -->
+
+      <!-- About start -->
+      <section class="lg:py-[130px] py-[80px]">
+         <div class="container">
+            <div class="grid items-center lg:grid-cols-2 gap-[30px]">
+               <div class="relative">
+                  <img class="absolute -z-1 top-0 left-0" src="assets/image/image-1.svg" alt="circle">
+                  <img class="rounded-[63%_37%_30%_70%/_50%_45%_55%_50%] border-[20px] border-primary"
+                     src="assets/image/womane.jpg" alt="about image">
+                  <img class="absolute -z-1 bottom-0 right-0" src="assets/image/image-2.png" alt="">
+               </div>
+               <div class="lg:pl-[100px]">
+                  <h2 class="text-[32px] font-semibold">Total Solutions for Your Business Here</h2>
+                  <p class="text-[20px] text-[#707070]">Interactively develop timely niche markets before
+                     extensive imperatives. Professionally
+                     repurpose strategies.</p>
+                  <ul class="py-[30px]">
+                     <li class="text-[#707070] mb-3 flex gap-[10px] items-center">
+                        <i class="text-[14px] text-secondary fa-solid fa-angles-right"></i>
+                        <span><strong>Creative</strong> Websites Design</span>
+                     </li>
+                     <li class="text-[#707070] mb-3 flex gap-[10px] items-center">
+                        <i class="text-[14px] text-secondary fa-solid fa-angles-right"></i>
+                        <span><strong>Accounting</strong> Procedures Guidebook</span>
+                     </li>
+                     <li class="text-[#707070] mb-3 flex gap-[10px] items-center">
+                        <i class="text-[14px] text-secondary fa-solid fa-angles-right"></i>
+                        <span><strong>Cost</strong> Accounting Fundamentals</span>
+                     </li>
+                     <li class="text-[#707070] mb-3 flex gap-[10px] items-center">
+                        <i class="text-[14px] text-secondary fa-solid fa-angles-right"></i>
+                        <span><strong>SEO</strong> Optimization Services</span>
+                     </li>
+                  </ul>
+
+                  <a class="inline-block px-[30px] py-[15px] bg-primary rounded-sm text-white duration-300 hover:bg-[#13215a] capitalize"
+                     href="#">View Services</a>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- About end -->
+
+
+
+      <!-- Services start -->
+      <section class="bg-[#F5F5F5] py-[100px]">
+         <div class="text-center px-4">
+            <h1 class="text-[32px] mb-5 font-semibold">We Provide Quality Services</h1>
+            <p class="text-[20px] text-[#707070] max-w-[690px] mx-auto">Efficiently aggregate end-to-end core
+               competencies without
+               maintainable. Dynamically foster tactical
+               solutions without
+               enabled value.</p>
+         </div>
+
+
+
+         <div class="container">
+            <div class="grid lg:grid-cols-2 mt-[50px] gap-x-[30px] gap-y-[20px]">
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div class="bg-white shadow-xl rounded-2xl p-[40px] flex">
+                  <span class="text-secondary text-[40px]">
+                     <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+
+                  <div class="pl-[20px]">
+                     <h4 class="font-semibold text-[18px] mb-2">Marketing Services</h4>
+                     <p class="text-black/60 mb-[10px]">Progressively empower business "outside the box" thinking with
+                        resource-leveling partnerships.
+                     </p>
+                     <a href="#" class="text-black/60 group hover:text-secondary duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+               </div>
+
+            </div>
+         </div>
+
+
+      </section>
+      <!-- Services end -->
+
+
+      <!-- download section -->
+      <section class="bg-[url(../image/catagori.jpg)] bg-cover bg-fixed lg:py-[130px] py-[80px] relative z-1">
+         <div
+            class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)] -z-1">
+         </div>
+         <div>
+            <div class="container text-center">
+
+               <h2 class="text-white text-[32px] font-bold text-center mb-[20px] ">Download Our Business Apps</h2>
+               <p class="text-white text-[20px] text-center lg:w-[790px] mx-auto mb-[30px]">
+                  Building your Apps helps
+                  attract more
+                  potential
+                  clients.
+                  Our integrated
+                  marketing team will promote
+                  enabled internal or
+                  work high-impact convergence.
+               </p>
+
+
+               <div class="inline-flex flex-wrap justify-center gap-[20px]">
+                  <a href="#"
+                     class="flex group gap-x-[10px] border-2 border-white duration-500 hover:bg-white items-center px-[30px] py-[8px] rounded-full">
+                     <i class="fa-brands text-[40px] text-white group-hover:text-black -ml-[10px] fa-apple"></i>
+                     <div>
+                        <span class="block text-white group-hover:text-black text-left text-[14px]">Download on
+                           the</span>
+                        <span class="block text-white group-hover:text-black text-left text-[16px] font-bold">App
+                           Store</span>
+                     </div>
+                  </a>
+                  <a href="#"
+                     class="flex group gap-x-[10px] border-2 border-white duration-500 hover:bg-white items-center px-[30px] py-[8px] rounded-full">
+
+                     <i class="fa-brands text-[40px] text-white group-hover:text-black -ml-[10px] fa-google-play"></i>
+                     <div>
+                        <span class="block text-white group-hover:text-black text-left text-[14px]">Download on
+
+                           <span class="block text-white group-hover:text-black text-left text-[16px] font-bold">Google
+                              Play</span>
+                        </span>
+                     </div>
+                  </a>
+                  <a href="#"
+                     class="flex group gap-x-[10px] border-2 border-white duration-500 hover:bg-white items-center px-[30px] py-[8px] rounded-full">
+
+                     <i class="fa-brands text-[40px] text-white group-hover:text-black -ml-[10px] fa-windows"></i>
+                     <div>
+                        <span class="block text-white group-hover:text-black text-left text-[14px]">Download on
+
+                           <span
+                              class="block text-white group-hover:text-black text-left text-[16px] font-bold">Windows</span>
+                        </span>
+                     </div>
+                  </a>
+
+               </div>
+
+
+            </div>
+         </div>
+      </section>
+      <!-- download end -->
+
+
+
+      <!-- gallery start -->
+      <section class="lg:py-[120px] py-[80px]">
+         <div class="container ">
+            <div class="text-center px-4">
+               <h1 class="text-[32px] mb-5 font-semibold">Check Our Quality Work</h1>
+               <p class="text-[20px] text-[#707070] max-w-[690px] mx-auto">Dynamically pursue reliable convergence
+                  rather than 24/7 process improvements develop end-to-end customer service.</p>
+            </div>
+
+            <div class="mt-[30px] mb-[20px] flex-wrap  flex justify-center gap-3">
+               <button
+                  class="px-[25px] py-[8px] hover:bg-primary cursor-pointer duration-500 hover:text-white border border-primary rounded-full text-primary">All</button>
+               <button
+                  class="px-[25px] py-[8px] hover:bg-primary cursor-pointer duration-500 hover:text-white border border-primary rounded-full text-primary">Branding</button>
+               <button
+                  class="px-[25px] py-[8px] hover:bg-primary cursor-pointer duration-500 hover:text-white border border-primary rounded-full text-primary">Animation</button>
+               <button
+                  class="px-[25px] py-[8px] hover:bg-primary cursor-pointer duration-500 hover:text-white border border-primary rounded-full text-primary">Others</button>
+            </div>
+
+
+
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-[20px]">
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-2.jpg" alt="">
+               </div>
+
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-1.jpg" alt="">
+               </div>
+
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-3.jpg" alt="">
+               </div>
+
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-4.jpg" alt="">
+               </div>
+
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-5.jpg" alt="">
+               </div>
+
+               <div class="border-[10px] border-gray-200 rounded-sm relative">
+                  <div
+                     class="absolute group opacity-0 hover:opacity-100 duration-300 -top-[10px] -left-[10px] flex flex-col justify-center items-center w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-sm bg-[linear-gradient(85deg,rgba(26,44,121,0.8)_30%,rgba(232,5,102,0.9)_100%)]">
+
+                     <div
+                        class="text-center translate-y-[60px] group-hover:translate-0 duration-300 opacity-0 group-hover:opacity-100">
+                        <p class="text-[20px] font-semibold text-white">Creative Design</p>
+                        <p class="text-white">Design</p>
+                     </div>
+
+                  </div>
+                  <img src="assets/image/gallary-6.jpg" alt="">
+               </div>
+            </div>
+
+         </div>
+      </section>
+      <!-- gallery end -->
+
+
+
+      <!-- our news start -->
+      <section class="bg-[#F5F5F5] lg:py-[100px] py-[80px]">
+         <div class="container">
+            <div class="text-center px-4">
+               <h1 class="text-[32px] mb-5 font-semibold">Our Latest News</h1>
+               <p class="text-[20px] text-[#707070] max-w-[690px] mx-auto">Dynamically pursue reliable convergence
+                  rather than 24/7 process improvements develop end-to-end customer service.</p>
+            </div>
+
+
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 mt-[40px] gap-[30px]">
+               <div class=" bg-white rounded-sm">
+
+                  <div class="relative">
+                     <a class="absolute right-4 bottom-4 rounded-md bg-pink-600 px-3 py-1 text-[11px] font-semibold text-white shadow-md"
+                        href="#">
+                        SEO, Analytics
+                     </a>
+                     <img class="h-full w-full rounded-t-sm object-cover" src="./assets/image/news-1.jpg" alt="" />
+                  </div>
+                  <div class="flex justify-between p-[20px]">
+                     <a href="#" class="flex items-center"><img
+                           class="w-[35px] p-[3px] rounded-full border border-primary" src="./assets/image/client-1.jpg"
+                           alt=""><span class="pl-[10px] text-[13px] text-[#111d4f]">Admin</span>
+                     </a>
+                     <div class="text-[#707070]">
+                        <span><i class="fa-solid fa-calendar-days"></i></span>
+                        <span class="text-[13px] ">15 March 2020</span>
+                     </div>
+                  </div>
+
+
+                  <div class="px-[20px] mb-[20px]">
+                     <h2 class="text-[20px] font-semibold">Holisticly promote enabled</h2>
+                     <p class="text-[16px] text-[#707070] w-[300px] py-[20px]">Some quick example text to build on the
+                        card title
+                        and make
+                        up the bulk of the card's
+                        content.</p>
+                     <a href="#" class="text-primary group font-semibold duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+
+               </div>
+
+
+               <div class=" bg-white rounded-sm">
+
+                  <div class="relative">
+                     <a class="absolute right-4 bottom-4 rounded-md bg-pink-600 px-3 py-1 text-[11px] font-semibold text-white shadow-md"
+                        href="#">
+                        SEO, Analytics
+                     </a>
+                     <img class="h-full w-full rounded-t-sm object-cover" src="./assets/image/news-2.jpg" alt="" />
+                  </div>
+                  <div class="flex justify-between p-[20px]">
+                     <a href="#" class="flex items-center"><img
+                           class="w-[35px] p-[3px] rounded-full border border-primary" src="./assets/image/client-1.jpg"
+                           alt=""><span class="pl-[10px] text-[13px] text-[#111d4f]">Admin</span>
+                     </a>
+                     <div class="text-[#707070]">
+                        <span><i class="fa-solid fa-calendar-days"></i></span>
+                        <span class="text-[13px] ">15 March 2020</span>
+                     </div>
+                  </div>
+
+
+                  <div class="px-[20px] mb-[20px]">
+                     <h2 class="text-[20px] font-semibold">Holisticly promote enabled</h2>
+                     <p class="text-[16px] text-[#707070] w-[300px] py-[20px]">Some quick example text to build on the
+                        card title
+                        and make
+                        up the bulk of the card's
+                        content.</p>
+                     <a href="#" class="text-primary group font-semibold duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+
+               </div>
+
+
+               <div class=" bg-white rounded-sm">
+
+                  <div class="relative">
+                     <a class="absolute right-4 bottom-4 rounded-md bg-pink-600 px-3 py-1 text-[11px] font-semibold text-white shadow-md"
+                        href="#">
+                        SEO, Analytics
+                     </a>
+                     <img class="h-full w-full rounded-t-sm object-cover" src="./assets/image/news-3.jpg" alt="" />
+                  </div>
+                  <div class="flex justify-between p-[20px]">
+                     <a href="#" class="flex items-center"><img
+                           class="w-[35px] p-[3px] rounded-full border border-primary" src="./assets/image/client-1.jpg"
+                           alt=""><span class="pl-[10px] text-[13px] text-[#111d4f]">Admin</span>
+                     </a>
+                     <div class="text-[#707070]">
+                        <span><i class="fa-solid fa-calendar-days"></i></span>
+                        <span class="text-[13px] ">15 March 2020</span>
+                     </div>
+                  </div>
+
+
+                  <div class="px-[20px] mb-[20px]">
+                     <h2 class="text-[20px] font-semibold">Holisticly promote enabled</h2>
+                     <p class="text-[16px] text-[#707070] w-[300px] py-[20px]">Some quick example text to build on the
+                        card title
+                        and make
+                        up the bulk of the card's
+                        content.</p>
+                     <a href="#" class="text-primary group font-semibold duration-300 inline-flex items-center">
+                        <span class="inline-block pr-1">Read more</span>
+                        <i class="fa-solid text-[10px] group-hover:pl-2 translate-y-[3px] fa-chevron-right"></i>
+                     </a>
+                  </div>
+
+               </div>
+
+
+            </div>
+      </section>
+
+      <!-- our news end -->
+
+
+
+
+      <!-- Our Team start -->
+
+      <section class="lg:py-[130px] py-[80px]">
+         <div class="container">
+
+
+            <div class="text-center px-4">
+               <h1 class="text-[32px] mb-5 font-semibold">Our Team</h1>
+               <p class="text-[20px] text-[#707070] max-w-[690px] mx-auto">Dynamically pursue reliable convergence
+                  rather than 24/7 process improvements develop end-to-end customer service.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-[30px] mt-[50px] ">
+               <div class="bg-[#F2F2F2]">
+                  <div class="pt-[48px] pb-[24px] items-center flex flex-col">
+                     <div
+                        class="w-[125px] shadow-[0_1rem_3rem_rgba(0,0,0,0.175)] rounded-full border-[10px] border-white">
+                        <img class="rounded-full" src="./assets/image/rounded-1.jpg" alt="">
+                     </div>
+                  </div>
+
+                  <div class="px-[48px] pb-[48px] flex flex-col justify-center items-center">
+                     <h4 class="text-[20px] font-bold">John Q. Public</h4>
+                     <span class="text-[16px] py-[10px]">Developer</span>
+                     <div class="my-[10px] flex justify-center gap-[15px] text-primary">
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 40k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 25k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 100k Subscribers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-dribbble"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 15k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                     </div>
+
+                     <p class="text-center text-[16px] text-[#707070]">Some quick example text to build on the card
+                        title and make up the bulk of
+                        the card's content.
+                     </p>
+                  </div>
+               </div>
+
+               <div class="bg-[#F2F2F2]">
+                  <div class="pt-[48px] pb-[24px] items-center flex flex-col">
+                     <div
+                        class="w-[125px] shadow-[0_1rem_3rem_rgba(0,0,0,0.175)] rounded-full border-[10px] border-white">
+                        <img class="rounded-full" src="./assets/image/rounded-2.jpg" alt="">
+                     </div>
+                  </div>
+
+                  <div class="px-[48px] pb-[48px] flex flex-col justify-center items-center">
+                     <h4 class="text-[20px] font-bold">Madurai Mani Iyer</h4>
+                     <span class="text-[16px] py-[10px]">Developer</span>
+                     <div class="my-[10px] flex justify-center gap-[15px] text-primary">
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 40k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 25k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 100k Subscribers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-dribbble"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 15k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                     </div>
+
+                     <p class="text-center text-[16px] text-[#707070]">Some quick example text to build on the card
+                        title and make up the bulk of
+                        the card's content.
+                     </p>
+                  </div>
+               </div>
+
+
+               <div class="bg-[#F2F2F2]">
+                  <div class="pt-[48px] pb-[24px] items-center flex flex-col">
+                     <div
+                        class="w-[125px] shadow-[0_1rem_3rem_rgba(0,0,0,0.175)] rounded-full border-[10px] border-white">
+                        <img class="rounded-full" src="./assets/image/rounded-3.jpg" alt="">
+                     </div>
+                  </div>
+
+                  <div class="px-[48px] pb-[48px] flex flex-col justify-center items-center">
+                     <h4 class="text-[20px] font-bold">Maria J. Go</h4>
+                     <span class="text-[16px] py-[10px]">Developer</span>
+                     <div class="my-[10px] flex justify-center gap-[15px] text-primary">
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 40k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 25k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 100k Subscribers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                        <div class="group relative flex flex-col items-center">
+                           <a href="#"><i class="fa-brands fa-dribbble"></i></a>
+                           <div class="absolute bottom-full mb-2 hidden flex-col items-center group-hover:flex">
+                              <span
+                                 class="whitespace-nowrap rounded bg-white px-3 py-1 text-xs text-gray-800 shadow-md">
+                                 15k Followers
+                              </span>
+                              <div class="-mt-1 h-2 w-2 rotate-45 bg-white"></div>
+                           </div>
+                        </div>
+
+                     </div>
+
+                     <p class="text-center text-[16px] text-[#707070]">Some quick example text to build on the card
+                        title and make up the bulk of
+                        the card's content.
+                     </p>
+                  </div>
+               </div>
+
+            </div>
+
+         </div>
+      </section>
+
+      <!-- Our Team end -->
+
+
+
+
+      <!-- About Us start -->
+
+      <section class="bg-[#F5F5F5] py-[130px]">
+
+         <div class="container">
+
+
+            <div class="text-center px-4">
+               <h1 class="text-[32px] mb-5 font-semibold">What Clients Say About Us</h1>
+               <p class="text-[20px] text-[#707070] max-w-[690px] mx-auto">Dynamically pursue reliable convergence
+                  rather than 24/7 process improvements develop end-to-end customer service.</p>
+            </div>
+
+
+
+            <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-[30px]">
+               <div class="bg-white p-[40px] rounded-2xl mt-[50px] shadow-[0_1rem_3rem_rgba(0,0,0,0.175)]">
+
+                  <span>
+                     <i class="fa-solid fa-quote-left text-[55px] text-[#D1D3E0]"></i>
+                  </span>
+
+                  <p class="text-[#707070] text-[20px] mt-[20px]"><i>Assertively procrastinate distributed
+                        relationships whereas
+                        equity invested intellectual capital
+                        everything
+                        energistically underwhelm proactive.</i></p>
+
+
+                  <div class="flex items-center justify-between mt-[30px]">
+                     <div class="flex items-center gap-4">
+                        <img class="w-[50px] rounded-full" src="./assets/image/star-1.jpg" alt="">
+                        <div>
+                           <h4 class="text-base font-bold text-gray-900">Kyan Boards</h4>
+                           <span class="text-sm text-gray-500">CEO, ThemeTags</span>
+                        </div>
+                     </div>
+
+                     <div>
+                        <div class="text-[#F5B759] text-[14px]">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-[#707070] text-[13px] font-semibold">5.0 Out of 5</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="bg-white p-[40px] rounded-2xl mt-[50px] shadow-[0_1rem_3rem_rgba(0,0,0,0.175)]">
+
+                  <span>
+                     <i class="fa-solid fa-quote-left text-[55px] text-[#D1D3E0]"></i>
+                  </span>
+
+                  <p class="text-[#707070] text-[20px] mt-[20px]"><i>Assertively procrastinate distributed
+                        relationships whereas
+                        equity invested intellectual capital
+                        everything
+                        energistically underwhelm proactive.</i></p>
+
+
+                  <div class="flex items-center justify-between mt-[30px]">
+                     <div class="flex items-center gap-4">
+                        <img class="w-[50px] rounded-full" src="./assets/image/star-1.jpg" alt="">
+                        <div>
+                           <h4 class="text-base font-bold text-gray-900">Kyan Boards</h4>
+                           <span class="text-sm text-gray-500">CEO, ThemeTags</span>
+                        </div>
+                     </div>
+
+                     <div>
+                        <div class="text-[#F5B759] text-[14px]">
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                           <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-[#707070] text-[13px] font-semibold">5.0 Out of 5</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+         </div>
+      </section>
+
+      <!-- About Us end -->
+
+
+
+
+
+
+      <!-- Business start -->
+
+      <section class="py-[30px] md:py-[50px] px-[20px] md:px-[50px]">
+         <div
+            class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+               <h3 class="text-[22px] sm:text-[28px] font-bold text-[#000] mb-[10px]">Consulting Agency for Your
+                  Business</h3>
+               <p class="text-[14px] sm:text-[16px] text-[#707070]">Rapidiously engage fully tested e-commerce with
+                  progressive
+                  architectures.</p>
+            </div>
+            <div class="shrink-0">
+               <span
+                  class="inline-block py-[13px] px-[26px] bg-[#1A2C79] hover:bg-[#13215A] duration-300 text-white rounded-sm"><a
+                     href="#">Contact With Us</a></span>
+            </div>
+         </div>
+      </section>
+
+      <!-- Business end -->
+
+
+   </main>
+
+
+   <!-- main end -->
+
+
+   <!------------- footer start ------------->
+   <footer class="bg-primary text-white">
+      <div class="container mx-auto px-4">
+         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10 lg:py-[100px] py-[60px]">
+            <div class="w-full max-w-[330px]">
+               <a href="#">
+                  <img src="assets/image/logo.png" alt="Corporx Logo">
+               </a>
+               <p class="mt-[30px] text-white/50">Interactively unleash interactive best practices before technically
+                  sound
+                  portals.</p>
+
+               <ul class="flex gap-x-5 mt-[30px]">
+                  <li class="relative group">
+                     <a class="w-10 h-10 rounded-full bg-[#48dbfb] flex items-center justify-center hover:bg-[#48dbfb]/80 transition-colors"
+                        href="#">
+                        <i class="fa-brands fa-twitter"></i>
+                     </a>
+                     <div
+                        class="z-10 absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-300 bottom-[calc(100%+10px)] -translate-x-1/2 left-1/2 bg-white px-[10px] py-0.5 text-black rounded-[5px]">
+                        <span class="text-nowrap">400k followers</span>
+                        <span
+                           class="-z-10 absolute left-1/2 -bottom-[5px] bg-white w-[10px] h-[10px] -translate-x-1/2 rotate-45"></span>
+                     </div>
+                  </li>
+                  <li class="relative group">
+                     <a class="w-10 h-10 rounded-full bg-[#38589A] flex items-center justify-center hover:bg-[#38589A]/80 transition-colors"
+                        href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                     </a>
+                     <div
+                        class="z-10 absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-300 bottom-[calc(100%+10px)] -translate-x-1/2 left-1/2 bg-white px-[10px] py-0.5 text-black rounded-[5px]">
+                        <span class="text-nowrap">500k Like</span>
+                        <span
+                           class="-z-10 absolute left-1/2 -bottom-[5px] bg-white w-[10px] h-[10px] -translate-x-1/2 rotate-45"></span>
+                     </div>
+                  </li>
+                  <li class="relative group">
+                     <a class="w-10 h-10 rounded-full bg-[#DB331B] flex items-center justify-center hover:bg-[#DB331B]/80 transition-colors"
+                        href="#">
+                        <i class="fa-brands fa-youtube"></i>
+                     </a>
+                     <div
+                        class="z-10 absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-300 bottom-[calc(100%+10px)] -translate-x-1/2 left-1/2 bg-white px-[10px] py-0.5 text-black rounded-[5px]">
+                        <span class="text-nowrap">25k subscribers</span>
+                        <span
+                           class="-z-10 absolute left-1/2 -bottom-[5px] bg-white w-[10px] h-[10px] -translate-x-1/2 rotate-45"></span>
+                     </div>
+                  </li>
+                  <li class="relative group">
+                     <a class="w-10 h-10 rounded-full bg-[#EB648A] flex items-center justify-center hover:bg-[#EB648A]/80 transition-colors"
+                        href="#">
+                        <i class="fa-brands fa-dribbble"></i>
+                     </a>
+                     <div
+                        class="z-10 absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-300 bottom-[calc(100%+10px)] -translate-x-1/2 left-1/2 bg-white px-[10px] py-0.5 text-black rounded-[5px]">
+                        <span class="text-nowrap">2k projects</span>
+                        <span
+                           class="-z-10 absolute left-1/2 -bottom-[5px] bg-white w-[10px] h-[10px] -translate-x-1/2 rotate-45"></span>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+
+            <div class="pl-0 lg:pl-[180px]">
+               <h3 class="text-[24px] font-bold mb-[20px] lg:mb-[30px]">Company</h3>
+               <ul class="space-y-2">
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">About us</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Services</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Projects</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Blog</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Contact us</a></li>
+               </ul>
+            </div>
+
+            <div class="pl-0 lg:pl-[180px]">
+               <h3 class="text-[24px] font-bold mb-[20px] lg:mb-[30px]">Support</h3>
+               <ul class="space-y-2">
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">FAQ</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Policy</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Business</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Team</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Career</a></li>
+               </ul>
+            </div>
+
+            <div class="pl-0 lg:pl-[180px]">
+               <h3 class="text-[24px] font-bold mb-[20px] lg:mb-[30px]">Company</h3>
+               <ul class="space-y-2">
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">About us</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Services</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Projects</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Blog</a></li>
+                  <li><a class="text-white/50 hover:text-white transition-colors" href="#">Contact us</a></li>
+               </ul>
+            </div>
          </div>
       </div>
-   </section>
-
-   <!-- Section 3: Features -->
-   <section id="features">
-      <h2 class="section-title">Why Choose Us</h2>
-      <div class="grid-container">
-         <div class="feature-box">
-            <div class="feature-icon">🚀</div>
-            <h3>Express Delivery</h3>
-            <p>Get your smartphone delivered right to your door in under 24 hours.</p>
-         </div>
-         <div class="feature-box">
-            <div class="feature-icon">🛡️</div>
-            <h3>Official Warranty</h3>
-            <p>Enjoy a 1-year official brand warranty with full technical support.</p>
-         </div>
-         <div class="feature-box">
-            <div class="feature-icon">🔄</div>
-            <h3>7-Day Replacement</h3>
-            <p>Hassle-free 7 days replacement guarantee if you face any hardware issues.</p>
-         </div>
+      <div class="py-5 text-center bg-primary text-white border-t border-white/20 px-4">
+         <p>&copy; 2023 Corporx. All rights reserved.</p>
       </div>
-   </section>
-
-   <!-- Section 4: Reviews -->
-   <section id="reviews">
-      <h2 class="section-title">Customer Feedback</h2>
-      <div class="grid-container">
-         <div class="review-card">
-            <p>"The UI experience of buying from this site was awesome! Received original device safely."</p>
-            <span class="reviewer">- Rifat Hossain</span>
-         </div>
-         <div class="review-card">
-            <p>"Best prices compared to physical market stores. Highly recommended!"</p>
-            <span class="reviewer">- Sarah Ahmed</span>
-         </div>
-         <div class="review-card">
-            <p>"Super fast delivery and smooth customer service. Will definitely order again."</p>
-            <span class="reviewer">- Tanvir Hasan</span>
-         </div>
-      </div>
-   </section>
-
-   <!-- Section 5: Contact -->
-   <section id="contact">
-      <h2 class="section-title">Join The Club</h2>
-      <p style="margin-bottom: 25px;">Subscribe to receive exclusive deals and new product launch alerts.</p>
-      <div class="animated-input-group">
-         <input type="email" placeholder="Enter your email address...">
-         <button class="btn-animated" style="cursor: pointer;">Subscribe</button>
-      </div>
-   </section>
-
-   <!-- Footer -->
-   <footer>
-      <p>&copy; 2026 MobileMela. Crafted with modern UI Animations.</p>
    </footer>
+   <!------------- footer end ------------->
 
-   <!-- JavaScript for Mobile Menu Toggle -->
-   <script>
-      const menuToggle = document.getElementById('menuToggle');
-      const navMenu = document.getElementById('navMenu');
 
-      menuToggle.addEventListener('click', () => {
-         navMenu.classList.toggle('active');
-         menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
-      });
-
-      // Close menu when a link is clicked
-      document.querySelectorAll('#navMenu a').forEach(link => {
-         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            menuToggle.textContent = '☰';
-         });
-      });
-   </script>
 
 </body>
 
